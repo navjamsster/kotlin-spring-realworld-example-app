@@ -9,6 +9,10 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
+variables:
+  imageName: spring-demo
+
+
 steps:
 - task: Maven@3
   inputs:
@@ -24,4 +28,14 @@ steps:
     echo Starting the build
     mvn -N io.takari:maven:wrapper
     ./mvnw clean install
-  displayName: 'Build with Maven'    
+  displayName: 'Build with Maven'
+- script: |
+    echo Build docker image
+    docker build -t $(username).azurecr.io/$(imageName) .
+    echo Login to docker repository
+    docker login -u $(username) -p $(password) $(username).azurecr.io
+    echo Push docker image
+    docker push $(username).azurecr.io/$(imageName)
+  env:
+    username: $(username)
+    password: $(password)
