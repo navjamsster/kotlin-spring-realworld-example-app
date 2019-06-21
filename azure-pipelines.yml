@@ -36,5 +36,5 @@ steps:
     docker push $(username).azurecr.io/$(imageName)
   displayName: 'Build and Push Docker Image'
   env:
-    username: $(username)
-    password: $(password)
+    username: $(docker_username)
+    password: $(docker_password)
