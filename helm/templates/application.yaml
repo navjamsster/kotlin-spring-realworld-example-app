@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: {{ template "spring-demo.fullname" . }}-deployment
+spec:
+    replicas: {{ .Values.scale }}
+    selector:
+        matchLabels:
+            app: {{ template "spring-demo.fullname" . }}-spring
+    template:
+        metadata:
+            labels:
+                app: {{ template "spring-demo.fullname" . }}-spring
+        spec:
+            containers:
+            - name: spring
+              image: spring:{{ .Values.tag }}
+              ports:
+              - containerPort: 8080
+              env: 
+              - name: MYSQL_URL
+                value: mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.db }}
+

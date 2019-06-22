@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+    name: {{ template "spring-demo.fullname" . }}-service
+spec:
+    type: NodePort
+    selector: 
+        app: {{ template "spring-demo.fullname" . }}-spring
+    ports:
+        - port: 7070
+          targetPort: 8080
