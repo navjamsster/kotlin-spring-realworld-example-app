@@ -33,7 +33,7 @@ steps:
     echo Login to docker repository
     docker login -u $username -p $password $username.azurecr.io
     echo Push docker image
-    docker push $username.azurecr.io/$(imageName)
+    docker push $(Build.BuildId)
   displayName: 'Build and Push Docker Image'
   env:
     username: $(docker_username)
