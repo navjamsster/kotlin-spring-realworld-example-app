@@ -29,7 +29,7 @@ steps:
   displayName: 'Build with Maven'
 - script: |
     echo Build docker image
-    docker build -t $username.azurecr.io/$(imageName) .
+    docker build -t $(Build.BuildId) .
     echo Login to docker repository
     docker login -u $username -p $password $username.azurecr.io
     echo Push docker image
