@@ -41,13 +41,10 @@ steps:
 - task: HelmDeploy@0
   displayName: Helm init
   inputs:
-    azureResourceGroup: $(azureResourceGroup)
-    kubernetesCluster: $(kubernetesCluster)
-    azureSubscriptionEndpoint: Free Trial
     command: init
     upgradetiller: true
-    waitForExecution: true
     arguments: --client-only
+
 - task: HelmDeploy@0
   displayName: Helm package
   inputs:
