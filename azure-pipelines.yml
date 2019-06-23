@@ -41,9 +41,9 @@ steps:
 - task: HelmDeploy@0
   displayName: Helm init
   inputs:
-    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-    azureResourceGroup: $(azureResourceGroup)
-    kubernetesCluster: $(kubernetesCluster)
+    azureSubscriptionEndpoint: $azureSubscriptionEndpoint
+    azureResourceGroup: $azureResourceGroup
+    kubernetesCluster: $kubernetesCluster
     command: init
     upgradetiller: true
     waitForExecution: true
@@ -56,7 +56,7 @@ steps:
   displayName: Helm package
   inputs:
     command: package
-    chartPath: $(chartPath)
+    chartPath: $chartPath
     destination: $(Build.ArtifactStagingDirectory)
     version: $(Build.BuildNumber)
     updatedependency: true    
