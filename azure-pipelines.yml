@@ -36,8 +36,8 @@ steps:
     docker push $username.azurecr.io/$(imageName):$(Build.BuildNumber)
   displayName: 'Build and Push Docker Image'
   env:
-    username: $(docker_username)
-    password: $(docker_password)
+    username: $(acrUsername)
+    password: $(acrPassword)
 - task: HelmInstaller@0
   displayName: Install Helm
   inputs:

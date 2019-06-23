@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ template "spring-demo.fullname" . }}-ingress
+  labels:
+    app: {{ template "spring-demo.fullname" . }}-spring
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /(.*)
+        backend:
+          serviceName: {{ template "spring-demo.fullname" . }}-service
+          servicePort: 7070
