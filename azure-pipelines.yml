@@ -49,9 +49,9 @@ steps:
     waitForExecution: true
     arguments: --client-only
   env:
-    azureSubscriptionEndpoint: 
-    azureResourceGroup: 
-    kubernetesCluster: 
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
 - task: HelmDeploy@0
   displayName: Helm package
   inputs:
@@ -61,4 +61,4 @@ steps:
     version: $(Build.BuildNumber)
     updatedependency: true    
   env:
-    chartPath:
+    chartPath: $(chartPath)
