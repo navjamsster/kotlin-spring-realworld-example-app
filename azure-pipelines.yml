@@ -38,16 +38,16 @@ steps:
 #   env:
 #     username: $(docker_username)
 #     password: $(docker_password)
-# - task: HelmDeploy@0
-#   displayName: Helm init
-#   inputs:
-#     azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
-#     azureResourceGroup: $(azureResourceGroup)
-#     kubernetesCluster: $(kubernetesCluster)
-#     command: init
-#     upgradetiller: true
-#     waitForExecution: true
-#     arguments: --client-only
+- task: HelmDeploy@0
+  displayName: Helm init
+  inputs:
+    azureResourceGroup: $(azureResourceGroup)
+    kubernetesCluster: $(kubernetesCluster)
+    azureSubscriptionEndpoint: $(azureSubscriptionEndpoint)
+    command: init
+    upgradetiller: true
+    waitForExecution: true
+    arguments: --client-only
 - task: HelmDeploy@0
   displayName: Helm package
   inputs:
