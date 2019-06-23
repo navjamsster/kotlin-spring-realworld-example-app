@@ -41,13 +41,13 @@ steps:
 - task: HelmInstaller@0
   displayName: Install Helm
   inputs:
-    helmVersion: 2.13.1
+    helmVersion: latest
 
 - task: HelmDeploy@0
   displayName: helm init --client-only
   inputs:
+    connectionType: None
     command: init
-    upgradeTiller: false
     arguments: '--client-only'
 
 - task: HelmDeploy@0
