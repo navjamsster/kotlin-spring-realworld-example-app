@@ -12,32 +12,32 @@ variables:
 
 
 steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: false
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-- script: |
-    echo Starting the build
-    mvn -N io.takari:maven:wrapper
-    ./mvnw clean install
-  displayName: 'Build with Maven'
-- script: |
-    echo Build docker image
-    docker build -t $username.azurecr.io/$(imageName):$(Build.BuildNumber) .
-    echo Login to docker repository
-    docker login -u $username -p $password $username.azurecr.io
-    echo Push docker image
-    docker push $username.azurecr.io/$(imageName):$(Build.BuildNumber)
-  displayName: 'Build and Push Docker Image'
-  env:
-    username: $(docker_username)
-    password: $(docker_password)
+# - task: Maven@3
+#   inputs:
+#     mavenPomFile: 'pom.xml'
+#     mavenOptions: '-Xmx3072m'
+#     javaHomeOption: 'JDKVersion'
+#     jdkVersionOption: '1.8'
+#     jdkArchitectureOption: 'x64'
+#     publishJUnitResults: false
+#     testResultsFiles: '**/surefire-reports/TEST-*.xml'
+#     goals: 'package'
+# - script: |
+#     echo Starting the build
+#     mvn -N io.takari:maven:wrapper
+#     ./mvnw clean install
+#   displayName: 'Build with Maven'
+# - script: |
+#     echo Build docker image
+#     docker build -t $username.azurecr.io/$(imageName):$(Build.BuildNumber) .
+#     echo Login to docker repository
+#     docker login -u $username -p $password $username.azurecr.io
+#     echo Push docker image
+#     docker push $username.azurecr.io/$(imageName):$(Build.BuildNumber)
+#   displayName: 'Build and Push Docker Image'
+#   env:
+#     username: $(docker_username)
+#     password: $(docker_password)
 - task: HelmInstaller@0
   displayName: Install Helm
   inputs:
@@ -56,3 +56,8 @@ steps:
     destination: $(Build.ArtifactStagingDirectory)
     version: $(Build.BuildNumber)
     updatedependency: true
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'charts'
+    publishLocation: 'Container'
