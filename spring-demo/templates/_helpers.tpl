@@ -30,3 +30,7 @@ Create chart name and version as used by the chart label.
 {{- define "spring-demo.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
+
+{{- define "imagePullSecret" }}
+{{- printf "{\"auths\": {\"%s\": {\"auth\": \"%s\"}}}" .Values.image.repository (printf "%s:%s" .Values.image.username .Values.image.password | b64enc) | b64enc }}
+{{- end }}

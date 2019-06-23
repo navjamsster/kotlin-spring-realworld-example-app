@@ -13,8 +13,10 @@ spec:
                 app: {{ template "spring-demo.fullname" . }}-spring
         spec:
             containers:
-            - name: spring
-              image: spring:{{ .Values.tag }}
+            - name: {{ template "spring-demo.fullname" . }}-spring
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+            imagePullSecrets:
+            - name: {{ template "spring-demo.fullname" . }}-acr-secret              
               ports:
               - containerPort: 8080
               env: 
