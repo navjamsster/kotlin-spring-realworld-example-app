@@ -41,9 +41,9 @@ steps:
 - task: HelmDeploy@0
   displayName: Helm init
   inputs:
-    azureResourceGroup: $(azureResourceGroup)
-    kubernetesCluster: $(kubernetesCluster)
-    azureSubscriptionEndpoint: test
+    azureResourceGroup: $azureResourceGroup
+    kubernetesCluster: $kubernetesCluster
+    azureSubscriptionEndpoint: $azureSubscriptionEndpoint
     command: init
     upgradetiller: true
     waitForExecution: true
