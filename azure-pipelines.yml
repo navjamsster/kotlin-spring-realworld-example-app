@@ -38,12 +38,17 @@ steps:
 #   env:
 #     username: $(docker_username)
 #     password: $(docker_password)
+- task: HelmInstaller@0
+  displayName: Install Helm
+  inputs:
+    helmVersion: 2.13.1
+
 - task: HelmDeploy@0
-  displayName: Helm init
+  displayName: helm init --client-only
   inputs:
     command: init
-    upgradetiller: true
-    arguments: --client-only
+    upgradeTiller: false
+    arguments: '--client-only'
 
 - task: HelmDeploy@0
   displayName: Helm package
