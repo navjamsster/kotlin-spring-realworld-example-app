@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
     name: {{ template "spring-demo.fullname" . }}-service
 spec:
-    type: NodePort
+    type: LoadBalancer
     selector: 
         app: {{ template "spring-demo.fullname" . }}-spring
     ports:
