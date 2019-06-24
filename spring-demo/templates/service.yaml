@@ -2,10 +2,13 @@ kind: Service
 apiVersion: v1
 metadata:
     name: {{ template "spring-demo.fullname" . }}-service
+    annotations:
+        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
 spec:
     type: LoadBalancer
     selector: 
         app: {{ template "spring-demo.fullname" . }}-spring
     ports:
-        - port: 7070
+        - name: spring
+          port: 7070
           targetPort: 8080
