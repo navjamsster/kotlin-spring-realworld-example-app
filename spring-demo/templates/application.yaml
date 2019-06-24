@@ -18,20 +18,15 @@ spec:
             imagePullSecrets:
             - name: {{ template "spring-demo.fullname" . }}-acr-secret              
               ports:
-              - containerPort: 8080
+                - containerPort: 8080
               env: 
-              - name: MYSQL_DATA_SOURCE
-                value: mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysqlDatabase }}
-                name: MYSQL_USERNAME
-                valueFrom:
+                - name: MYSQL_DATA_SOURCE
+                  value: mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysqlDatabase }}
+                - name: JWT_SECRET
+                  value: {{ .Values.jwt.secret }}
+              envFrom:    
+                - name: MYSQL_PASSWORD
+                  valueFrom:
                     secretKeyRef:
-                        name: {{ template "spring-demo.fullname" . }}-mysql-secret
-                        key: username 
-                name: MYSQL_PASSWORD
-                valueFrom:
-                    secretKeyRef:
-                        name: {{ template "spring-demo.fullname" . }}-mysql-secret
-                        key: password 
-                name: JWT_SECRET
-                value: {{ .Values.jwt.secret }}
-
+                        name: {{ template "mysql.fullname" . }}
+                        key: mysql-password 
