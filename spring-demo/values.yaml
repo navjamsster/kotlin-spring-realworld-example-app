@@ -1,6 +1,1 @@
-db: sample
 scale: 1
-tag: latest
-
-mysql:
-    mysqlDatabase: sample
