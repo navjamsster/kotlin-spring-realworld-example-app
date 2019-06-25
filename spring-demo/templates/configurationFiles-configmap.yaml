@@ -4,5 +4,5 @@ metadata:
   name: {{ template "spring-demo.fullname" . }}-env
 data:
   SPRING_PROFILE: {{ .Values.spring.profile }}
-  MYSQL_USERNAME: {{ .Values.mysqlUser }}
-  MYSQL_DATA_SOURCE: jdbc:mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysqlDatabase }}
+  MYSQL_USERNAME: {{ .Values.mysql.mysqlUser }}
+  MYSQL_DATA_SOURCE: jdbc:mysql://{{ .Release.Name }}-mysql.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysql.mysqlDatabase }}
