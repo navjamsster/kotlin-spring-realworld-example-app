@@ -13,20 +13,23 @@ spec:
                 app: {{ template "spring-demo.fullname" . }}-spring
         spec:
             containers:
-            - name: {{ template "spring-demo.fullname" . }}-spring
-              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-            imagePullSecrets:
-            - name: {{ template "spring-demo.fullname" . }}-acr-secret              
-              ports:
-                - containerPort: 8080
-              env: 
-                - name: MYSQL_DATA_SOURCE
-                  value: mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysqlDatabase }}
-                - name: JWT_SECRET
-                  value: {{ .Values.jwt.secret }}
-              envFrom:    
+            - name: {{ template "spring-demo.fullname" . }}-container
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"         
+              envFrom:
+                - configMapRef:
+                    name: {{ template "spring-demo.fullname" . }}-env
+              env:
                 - name: MYSQL_PASSWORD
                   valueFrom:
                     secretKeyRef:
-                        name: {{ template "mysql.fullname" . }}
-                        key: mysql-password 
+                      name: {{ .Release.Name }}-mysql
+                      key: mysql-password    
+                - name: JWT_SECRET
+                  valueFrom:
+                    secretKeyRef:
+                      name: {{ template "spring-demo.fullname" . }}-jwt-secret
+                      key: jwt-secret              
+              ports:
+                - containerPort: 8080
+            imagePullSecrets:
+            - name: {{ template "spring-demo.fullname" . }}-acr-secret

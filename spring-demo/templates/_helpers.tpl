@@ -38,3 +38,7 @@ Create chart name and version as used by the chart label.
 {{- define "mysqlUserName" }}
 {{- printf "%s" .Values.mysqlUser | b64enc -}}
 {{- end }}
+
+{{- define "jwtSecret" }}
+{{- printf "%s" .Values.jwt.secret | b64enc -}}
+{{- end }}

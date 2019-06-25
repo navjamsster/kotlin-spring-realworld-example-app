@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "spring-demo.fullname" . }}-env
+data:
+  MYSQL_USERNAME: {{ .Values.mysqlUser }}
+  MYSQL_DATA_SOURCE: jdbc:mysql:://{{ template "mysql.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local:3306/{{ .Values.mysqlDatabase }}
