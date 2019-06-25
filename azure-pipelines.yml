@@ -15,18 +15,13 @@ steps:
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
+    mavenOptions: '-Xmx3072m -Dspring.profiles.active=dev'
     javaHomeOption: 'JDKVersion'
     jdkVersionOption: '1.8'
     jdkArchitectureOption: 'x64'
     publishJUnitResults: false
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
-- script: |
-    echo Starting the build
-    mvn -N io.takari:maven:wrapper
-    ./mvnw clean install -Dspring.profiles.active=dev
-  displayName: 'Build with Maven'
 - script: |
     echo Build docker image
     docker build -t $username.azurecr.io/$(imageName):$(Build.BuildNumber) .
