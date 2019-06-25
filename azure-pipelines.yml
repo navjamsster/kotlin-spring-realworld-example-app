@@ -25,7 +25,7 @@ steps:
 - script: |
     echo Starting the build
     mvn -N io.takari:maven:wrapper
-    ./mvnw clean install
+    ./mvnw clean install -Dspring.profiles.active=dev
   displayName: 'Build with Maven'
 - script: |
     echo Build docker image
